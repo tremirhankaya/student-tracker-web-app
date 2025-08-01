@@ -33,13 +33,36 @@ public class StudentControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            listStudents(req,resp);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    try{
+
+        String theCommand = req.getParameter("command");
+        if(theCommand==null){
+            theCommand="LIST";
+        }
+        switch(theCommand){
+            case "LIST":
+                listStudents(req,resp);
+                break;
+
+            default:
+                listStudents(req,resp);
+                break;
         }
 
+    }catch(Exception e){
+        throw new ServletException(e);
+    }
 
+
+    }
+
+    private void addStudent(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+        String firstName=req.getParameter("firstName");
+        String lastName=req.getParameter("lastName");
+        String email=req.getParameter("email");
+        Student theStudent=new Student(firstName,lastName,email);
+        studentDbUtil.addStudent(theStudent);
+        resp.sendRedirect(req.getContextPath() + "/StudentControllerServlet?command=LIST");
     }
 
     private void listStudents(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
@@ -51,5 +74,28 @@ public class StudentControllerServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            // read the "command" parameter
+            String theCommand = req.getParameter("command");
 
-}
+            // route to the appropriate method
+            switch (theCommand) {
+
+                case "ADD":
+                    addStudent(req, resp);
+                    break;
+
+                default:
+                    listStudents(req, resp);
+            }
+
+        }
+        catch (Exception exc) {
+            throw new ServletException(exc);
+        }
+
+    }
+    }
+

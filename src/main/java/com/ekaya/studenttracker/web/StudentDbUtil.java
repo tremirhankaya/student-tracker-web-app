@@ -1,10 +1,7 @@
 package com.ekaya.studenttracker.web;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +10,26 @@ public class StudentDbUtil {
 
     public StudentDbUtil(DataSource theDataSource) {
         this.dataSource = theDataSource;
+    }
+
+    public  void addStudent(Student theStudent) throws Exception{
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try{
+            conn= dataSource.getConnection();
+            String query="INSERT INTO student(first_name,last_name,email) VALUES (?,?,?)";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, theStudent.getFirstName());
+            stmt.setString(2, theStudent.getLastName());
+            stmt.setString(3, theStudent.getEmail());
+
+            stmt.executeUpdate();
+
+
+        }finally {
+            close(conn,stmt,null);
+        }
+
     }
 
     public List<Student> getStudents() throws SQLException {
