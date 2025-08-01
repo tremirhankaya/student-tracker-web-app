@@ -133,9 +133,9 @@
 <div id="container">
     <h3>Add Student</h3>
 
-    <form action="StudentControllerServlet" method="POST">
+    <form action="StudentControllerServlet" method="GET">
 
-        <input type="hidden" name="command" value="LOAD"/>
+        <input type="hidden" name="command" value="UPDATE"/>
         <input type="hidden" name="studentId" value="${student.id}"/>
 
         <table>

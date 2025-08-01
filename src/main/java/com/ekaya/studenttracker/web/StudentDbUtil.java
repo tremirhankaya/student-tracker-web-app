@@ -12,12 +12,35 @@ public class StudentDbUtil {
         this.dataSource = theDataSource;
     }
 
-    public  void addStudent(Student theStudent) throws Exception{
+    public void updateStudent(Student theStudent) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement stms = null;
+
+
+        try {
+            conn = dataSource.getConnection();
+            String sql = "UPDATE student SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
+            stms = conn.prepareStatement(sql);
+            stms.setString(1, theStudent.getFirstName());
+            stms.setString(2, theStudent.getLastName());
+            stms.setString(3, theStudent.getEmail());
+            stms.setInt(4, theStudent.getId());
+            stms.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(conn, stms, null);
+        }
+
+
+    }
+
+    public void addStudent(Student theStudent) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
-        try{
-            conn= dataSource.getConnection();
-            String query="INSERT INTO student(first_name,last_name,email) VALUES (?,?,?)";
+        try {
+            conn = dataSource.getConnection();
+            String query = "INSERT INTO student(first_name,last_name,email) VALUES (?,?,?)";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, theStudent.getFirstName());
             stmt.setString(2, theStudent.getLastName());
@@ -26,8 +49,8 @@ public class StudentDbUtil {
             stmt.executeUpdate();
 
 
-        }finally {
-            close(conn,stmt,null);
+        } finally {
+            close(conn, stmt, null);
         }
 
     }
@@ -76,39 +99,39 @@ public class StudentDbUtil {
         }
     }
 
-    public Student getStudent(String theStudentId)throws Exception {
+    public Student getStudent(String theStudentId) throws Exception {
         Student student = null;
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         int studentId;
-        try{
-            studentId=Integer.parseInt(theStudentId);
+        try {
+            studentId = Integer.parseInt(theStudentId);
 
-            conn=dataSource.getConnection();
+            conn = dataSource.getConnection();
 
-            String query="select * from student where id=?";
+            String query = "select * from student where id=?";
 
-            stmt=conn.prepareStatement(query);
+            stmt = conn.prepareStatement(query);
 
-            stmt.setInt(1,studentId);
+            stmt.setInt(1, studentId);
 
-            rs=stmt.executeQuery();
+            rs = stmt.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
                 String email = rs.getString("email");
 
-                student = new Student(studentId,firstName,lastName,email);
-            }else {
+                student = new Student(studentId, firstName, lastName, email);
+            } else {
                 throw new Exception("Could not find student id");
             }
 
 
             return student;
 
-        }finally {
+        } finally {
             close(conn, stmt, rs);
         }
     }

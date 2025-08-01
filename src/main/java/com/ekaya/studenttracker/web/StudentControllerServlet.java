@@ -49,6 +49,9 @@ public class StudentControllerServlet extends HttpServlet {
                 loadStudent(req,resp);
                 break;
 
+            case "UPDATE":
+                updateStudent(req,resp);
+
 
             default:
                 listStudents(req,resp);
@@ -60,6 +63,16 @@ public class StudentControllerServlet extends HttpServlet {
     }
 
 
+    }
+
+    private void updateStudent(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    int id=Integer.parseInt(req.getParameter("studentId"));
+    String firstName=req.getParameter("firstName");
+    String lastName=req.getParameter("lastName");
+    String email=req.getParameter("email");
+    Student theStudent=new Student(id,firstName,lastName,email);
+    studentDbUtil.updateStudent(theStudent);
+    listStudents(req, resp);
     }
 
     private void loadStudent(HttpServletRequest req, HttpServletResponse resp) throws Exception {
