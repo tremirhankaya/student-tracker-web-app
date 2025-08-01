@@ -4,16 +4,16 @@
 ![Apache Tomcat](https://img.shields.io/badge/Apache%20Tomcat-F8DC75?style=for-the-badge&logo=apache-tomcat&logoColor=black)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
-![JDBC](https://img.shields.io/badge/JDBC-007396?style=for-the-badge&logo=java&logoColor=white)
+![JDBC](https://img.io/badge/JDBC-007396?style=for-the-badge&logo=java&logoColor=white)
 ![JSP](https://img.shields.io/badge/JSP-F05032?style=for-the-badge&logo=java&logoColor=white)
 ![Servlets](https://img.shields.io/badge/Servlets-F05032?style=for-the-badge&logo=java&logoColor=white)
 
 ## 📝 Project Description
-This is a fundamental Java web application designed for tracking student information. It showcases core concepts of Java web development using **Servlets** for controller logic, **JDBC** for database interaction (specifically with **PostgreSQL**), and **JavaServer Pages (JSP)** for the view layer. The application is built to run efficiently on **Apache Tomcat**, emphasizing clear, clean, and readable code. It serves as a practical learning resource for those getting started with Java web development.
+This is a fundamental Java web application designed for tracking student information. Its **primary focus is on demonstrating core backend concepts and CRUD (Create, Read, Update, Delete) operations**, rather than complex UI design. The application utilizes **Servlets** for handling controller logic and **JDBC** for robust database interaction (specifically with **PostgreSQL**). Running efficiently on **Apache Tomcat**, the front-end is built using **JavaServer Pages (JSP)**, providing a **functional and straightforward user interface** to facilitate interaction with the core backend functionalities.
 
 ## ✨ Features
 * 📊 Displaying a list of students from a PostgreSQL database.
-* 🔜 (Future: Adding new students)
+* ➕ Adding new students to the database.
 * 🔜 (Future: Updating existing student information)
 * 🔜 (Future: Deleting student records)
 

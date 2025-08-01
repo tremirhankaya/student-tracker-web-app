@@ -71,7 +71,7 @@
         }
 
         .add-button-container {
-            text-align: left; 
+            text-align: left;
             margin-bottom: 20px;
             padding-left: 15px;
         }
