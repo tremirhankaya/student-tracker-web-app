@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Student Tracker App</title>
@@ -48,7 +49,7 @@
 
         td {
             padding: 12px 15px;
-            text-align: left;
+            text-align: left; /* Varsayılan olarak sola hizalı kalır */
             border-bottom: 1px solid #ddd;
             color: #333;
         }
@@ -94,6 +95,15 @@
         .add-button:hover {
             background-color: #2c55a5;
         }
+
+        /* YENİ EKLENEN CSS KURALI */
+        .action-column {
+            text-align: center; /* Bu sütundaki içeriği ortala */
+        }
+        /* İsteğe bağlı: Eğer "Action" başlığını da ortalamak isterseniz */
+        th:last-child { /* Son <th> yani Action başlığı */
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -113,7 +123,6 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Action</th>
-
         </tr>
         </thead>
         <tbody>
@@ -122,11 +131,21 @@
                 <c:param name="command" value="LOAD"/>
                 <c:param name="studentId" value="${tempStudent.id}"/>
             </c:url>
+            <c:url var="deleteLink" value="StudentControllerServlet">
+                <c:param name="command" value="DELETE"/>
+                <c:param name="studentId" value="${tempStudent.id}"/>
+            </c:url>
             <tr>
                 <td><c:out value="${tempStudent.firstName}"/></td>
                 <td><c:out value="${tempStudent.lastName}"/></td>
                 <td><c:out value="${tempStudent.email}"/></td>
-                <td><a href="${tempLink}">Update</a></td>
+                <td class="action-column"> <a href="${tempLink}">Update</a>
+                    |
+                    <a href="${deleteLink}"
+                       onclick="return confirm('Are you sure you want to delete this student?');">
+                        Delete
+                    </a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

@@ -135,4 +135,28 @@ public class StudentDbUtil {
             close(conn, stmt, rs);
         }
     }
+
+    public void deleteStudent(String theStudentId)  {
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            int studentId=Integer.parseInt(theStudentId);
+            String query = "DELETE FROM STUDENT WHERE ID=?";
+            conn = dataSource.getConnection();
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, studentId);
+            stmt.executeUpdate(); 
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+
+                close(conn, stmt, null);
+
+        }
+
+
+    }
 }

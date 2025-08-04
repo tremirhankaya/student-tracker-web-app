@@ -33,7 +33,8 @@ public class StudentControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    try{
+
+        try{
 
         String theCommand = req.getParameter("command");
         if(theCommand==null){
@@ -51,6 +52,11 @@ public class StudentControllerServlet extends HttpServlet {
 
             case "UPDATE":
                 updateStudent(req,resp);
+                break;
+
+                case "DELETE":
+                    deleteStudent(req,resp);
+                    break;
 
 
             default:
@@ -61,6 +67,14 @@ public class StudentControllerServlet extends HttpServlet {
     }catch(Exception e){
         throw new ServletException(e);
     }
+
+
+    }
+
+    private void deleteStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, SQLException, IOException {
+     String theStudentId =req.getParameter("studentId");
+     studentDbUtil.deleteStudent(theStudentId);
+     listStudents(req, resp);
 
 
     }
@@ -103,6 +117,7 @@ public class StudentControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         try {
             // read the "command" parameter
             String theCommand = req.getParameter("command");
